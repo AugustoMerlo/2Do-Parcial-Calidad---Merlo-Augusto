@@ -1,7 +1,7 @@
 const http = require('http');
 
 function saludar() {
-  return "Hola Profesores!";
+  return "Hola Mundo";
 }
 
 const server = http.createServer((req, res) => {
@@ -9,8 +9,11 @@ const server = http.createServer((req, res) => {
   res.end(saludar());
 });
 
-// Render usa la variable PORT automáticamente
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
+
+// Solo iniciamos el servidor de Render si NO estamos corriendo pruebas con Jest
+if (process.env.NODE_ENV !== 'test') {
+  server.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
+}
 
 module.exports = saludar;

@@ -1,32 +1,37 @@
-name: Integracion Continua Node.js
+name: Integración y Despliegue Continuo (CI/CD)
 
-# 1. ¿Cuándo se ejecuta esto? Cada vez que haces un "push" al repositorio.
 on:
   push:
     branches: [ "main" ]
 
-# 2. ¿Qué trabajos (jobs) va a realizar?
 jobs:
-  build:
-    # 3. ¿En qué sistema operativo de la nube se va a ejecutar?
+  build-test-and-deploy:
     runs-on: ubuntu-latest
 
-    # 4. Los pasos exactos que va a seguir GitHub:
     steps:
-    # Paso A: Traer tu código del repositorio a esta computadora virtual
-    - name: Obtener el código
-      uses: actions/checkout@v4
+      # 1. Trae el código del repositorio
+      - name: Checkout del código
+        uses: actions/checkout@v3
 
-    # Paso B: Instalar Node.js en esa computadora virtual
-    - name: Instalar Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20' # Usaremos la versión 20 de Node
+      # 2. Prepara el entorno de Node.js
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Puedes cambiarlo si usas otra versión
 
-    # Paso C: Instalar las dependencias de tu proyecto (como Jest)
-    - name: Instalar dependencias
-      run: npm install
+      # 3. Instala las librerías
+      - name: Instalar dependencias
+        run: npm install
 
-    # Paso D: Ejecutar tu prueba automatizada
-    - name: Ejecutar pruebas
-      run: npm test
+      # 4. Ejecuta tus tests (Si esto falla, el proceso se corta aquí)
+      - name: Ejecutar pruebas
+        run: npm test
+
+      # 5. Despliega a Vercel SOLO si el paso anterior (pruebas) fue exitoso
+      - name: Desplegar a Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
+          vercel-args: '--prod' # Indica que es un despliegue a producción

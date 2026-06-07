@@ -1,19 +1,12 @@
-const http = require('http');
-
 function saludar() {
-  return "chau Mundo";
+  return "<h1>Hola Mundo</h1>";
 }
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
+// 1. Esto es lo que lee Vercel para mostrar tu página web
+module.exports = (req, res) => {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.end(saludar());
-});
+};
 
-const PORT = process.env.PORT || 3000;
-
-// Solo iniciamos el servidor de Render si NO estamos corriendo pruebas con Jest
-if (process.env.NODE_ENV !== 'test') {
-  server.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
-}
-
-module.exports = saludar;
+// 2. Exportamos la función específica para que Jest la pueda probar
+module.exports.saludar = saludar;

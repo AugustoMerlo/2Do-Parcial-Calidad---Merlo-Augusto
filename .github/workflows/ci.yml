@@ -26,3 +26,13 @@ jobs:
       # 4. Ejecuta tus tests (Si esto falla, el proceso se corta aquí)
       - name: Ejecutar pruebas
         run: npm test
+
+      - name: Ejecutar pruebas
+        run: npm test
+
+      # Paso 5: Desplegar en Vercel (NUEVO)
+      - name: Desplegar en Entorno de Entrega
+        run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}

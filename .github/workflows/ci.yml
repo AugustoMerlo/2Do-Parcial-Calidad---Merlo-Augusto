@@ -26,12 +26,3 @@ jobs:
       # 4. Ejecuta tus tests (Si esto falla, el proceso se corta aquí)
       - name: Ejecutar pruebas
         run: npm test
-
-      # 5. Despliega a Vercel SOLO si el paso anterior (pruebas) fue exitoso
-      - name: Desplegar a Vercel
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.ORG_ID }}
-          vercel-project-id: ${{ secrets.PROJECT_ID }}
-          vercel-args: '--prod' # Indica que es un despliegue a producción

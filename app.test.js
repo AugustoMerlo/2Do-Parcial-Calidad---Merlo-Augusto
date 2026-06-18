@@ -1,5 +1,5 @@
 const { saludar } = require('./app');
 
-test('debe retornar Hola Compas', () => {
-  expect(saludar()).toBe("<h1>Hola Compas</h1>");
+test('debe retornar Saludos', () => {
+  expect(saludar()).toBe("<h1>Saludos</h1>");
 });

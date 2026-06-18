@@ -1,5 +1,5 @@
 function saludar() {
-  return "<h1>Hola Compas</h1>";
+  return "<h1>Saludos</h1>";
 }
 
 // 1. Esto es lo que lee Vercel para mostrar tu página web

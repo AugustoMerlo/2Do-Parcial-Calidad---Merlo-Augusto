@@ -11,22 +11,17 @@ jobs:
     steps:
       # 1. Trae el código del repositorio
       - name: Checkout del código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 2. Prepara el entorno de Node.js
       - name: Configurar Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18' # Puedes cambiarlo si usas otra versión
+        uses: actions/setup-node@v4
 
       # 3. Instala las librerías
       - name: Instalar dependencias
         run: npm install
 
       # 4. Ejecuta tus tests (Si esto falla, el proceso se corta aquí)
-      - name: Ejecutar pruebas
-        run: npm test
-
       - name: Ejecutar pruebas
         run: npm test
 

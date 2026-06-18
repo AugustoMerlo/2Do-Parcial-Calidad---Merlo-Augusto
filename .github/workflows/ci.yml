@@ -21,12 +21,16 @@ jobs:
       - name: Instalar dependencias
         run: npm install
 
-      # 4. Ejecuta tus tests
+      # 4. Revisa el código con ESLint
+      - name: Linter (ESLint)
+        run: npm run lint
+
+      # 5. Ejecuta tus tests
       - name: Ejecutar pruebas
         run: npm test
 
 
-      # 5. Analiza el código con SonarCloud
+      # 6. Analiza el código con SonarCloud
       - name: Inspección de código con SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         env:
@@ -34,7 +38,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 
-      # Paso 6: Desplegar en Vercel
+      # 7. Desplegar en Vercel
       - name: Desplegar en Entorno de Entrega
         run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
         env:

@@ -21,11 +21,20 @@ jobs:
       - name: Instalar dependencias
         run: npm install
 
-      # 4. Ejecuta tus tests (Si esto falla, el proceso se corta aquí)
+      # 4. Ejecuta tus tests
       - name: Ejecutar pruebas
         run: npm test
 
-      # Paso 5: Desplegar en Vercel (NUEVO)
+
+      # 5. Analiza el código con SonarCloud
+      - name: Inspección de código con SonarCloud
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
+      # Paso 6: Desplegar en Vercel
       - name: Desplegar en Entorno de Entrega
         run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
         env:
